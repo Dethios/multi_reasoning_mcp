@@ -11,7 +11,7 @@ This MCP server:
 
 Run:
   mcp dev src/multi_reasoning_mcp/server.py
-or:
+or (installed package or PYTHONPATH=src):
   python -m multi_reasoning_mcp.server
 
 Notes:
@@ -20,6 +20,14 @@ Notes:
 """
 
 from __future__ import annotations
+
+# Allow running via `mcp dev path/to/server.py` where the module has no package context.
+if __package__ in (None, ""):
+    from pathlib import Path
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    __package__ = "multi_reasoning_mcp"
 
 import os
 from contextlib import asynccontextmanager

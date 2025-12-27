@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/victor/projects/codex-multireason-mcp/.venv
+set -gx VIRTUAL_ENV /home/victor/projects/multi_reasoning_mcp/.venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

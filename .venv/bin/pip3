@@ -1,4 +1,4 @@
-#!/home/victor/projects/codex-multireason-mcp/.venv/bin/python
+#!/home/victor/projects/multi_reasoning_mcp/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
