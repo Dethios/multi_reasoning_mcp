@@ -6,7 +6,7 @@ The orchestrator is a CLI-only MCP server that plans tasks, routes subtasks to m
 
 ## Components
 
-- `server.py`: MCP entrypoint exposing tools (diagnostics, list_modes, repo_scan, orchestrate_task, run_subtask, apply_patch, memory bridge).
+- `server.py`: MCP entrypoint exposing tools (diagnostics, list_modes, repo_scan, orchestrate_task, run_subtask, apply_patch, bridge health, memory bridge).
 - `modes/modes.yaml`: Mode registry with prompt templates, safety flags, output schemas, and preferred engines.
 - `codex_client.py`: Codex CLI runner (`codex exec`) with non-interactive configuration.
 - `gemini_client.py`: Gemini CLI runner (`gemini --output-format json`) with non-interactive approval mode.

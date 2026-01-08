@@ -263,5 +263,23 @@ async def memory_remember(item: dict[str, Any], project_id: str | None = None) -
         return json_response("Memory store failed.", ok=False, error=str(e))
 
 
+@mcp.tool(title="Bridge health", description="Check workspace_memory bridge connectivity.")
+async def bridge_health() -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("workspace_memory", "project.list", {})
+        allowed = bridge.get_allowed_tools("workspace_memory")
+        return json_response(
+            "Bridge healthy.",
+            ok=True,
+            allowed_tools=allowed,
+            result=result_to_dict(result),
+        )
+    except Exception as e:
+        return json_response("Bridge check failed.", ok=False, error=str(e))
+
+
 if __name__ == "__main__":
     mcp.run()

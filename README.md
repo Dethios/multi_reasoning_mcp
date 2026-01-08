@@ -64,6 +64,12 @@ This registers:
 - `multi_reasoning_mcp`
 - `workspace_memory`
 
+To generate a `~/.codex/config.toml` snippet that matches this repo’s paths:
+
+```bash
+projects/multi_reasoning_mcp/scripts/codex_config_snippet.sh
+```
+
 ---
 
 ## Gemini CLI
@@ -89,6 +95,7 @@ gemini mcp add -t stdio -s project \
 - `apply_patch(patch_text, safety_level, confirm_token?)`
 - `memory_search(...)` (bridge)
 - `memory_remember(...)` (bridge)
+- `bridge_health()` (bridge)
 
 All outputs are JSON with a human-readable `summary` field.
 

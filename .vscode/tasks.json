@@ -15,6 +15,22 @@
       "problemMatcher": []
     },
     {
+      "label": "On Open: Start MCP server",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": ["-m", "multi_reasoning_mcp.server"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "reveal": "silent" },
+      "runOptions": { "runOn": "folderOpen" }
+    },
+    {
       "label": "MCP: Smoke test",
       "type": "shell",
       "command": "${workspaceFolder}/scripts/smoke.sh",
