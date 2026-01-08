@@ -1,0 +1,27 @@
+{
+  "servers": {
+    "local/multi_reasoning_mcp": {
+      "type": "stdio",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": ["-m", "multi_reasoning_mcp.server"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src",
+        "MCP_INDEX_DB": "${workspaceFolder}/.mcp_index.sqlite3",
+        "CODEX_BIN": "codex",
+        "GEMINI_BIN": "gemini",
+        "MCP_WORKSPACE_ROOT": "${workspaceFolder}/../.."
+      }
+    },
+    "local/workspace_memory": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["-m", "workspace_memory.server"],
+      "cwd": "${workspaceFolder}/../../services/mcp_workspace_memory",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/../../services/mcp_workspace_memory/src",
+        "WORKSPACE_MEMORY_CONFIG": "${workspaceFolder}/../../services/mcp_workspace_memory/config.toml"
+      }
+    }
+  }
+}

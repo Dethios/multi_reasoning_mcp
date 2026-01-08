@@ -1,0 +1,14 @@
+.venv/
+.venv.bak-*/
+__pycache__/
+*.sqlite3
+.mcp_index.sqlite3
+.orchestrator/
+
+# Python artifacts
+*.pyc
+*.pyo
+*.pyd
+
+# OS
+.DS_Store

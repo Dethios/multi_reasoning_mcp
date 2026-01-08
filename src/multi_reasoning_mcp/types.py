@@ -1,70 +1,42 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Literal, Optional
+from typing import Any, Literal
 
 
-ReasoningEffort = Literal["minimal", "low", "medium", "high", "xhigh"]
-Verbosity = Literal["low", "medium", "high"]
-Backend = Literal["codex", "gemini", "openai", "both"]
-
-SandboxMode = Literal["read-only", "workspace-write", "danger-full-access"]
-ApprovalPolicy = Literal["untrusted", "on-failure", "never"]
-
-AgentRole = Literal[
-    "refactorer",
-    "ci_fixer",
-    "auditor",
-    "doc_analyst",
-    "file_ops",
-    "data_engineer",
-    "researcher",
-    "reviewer",
-    "optimizer",
-    "general",
-]
+ReasoningLevel = Literal["fast", "standard", "deep"]
+Engine = Literal["codex_cli", "gemini_cli", "none"]
+SafetyLevel = Literal["low", "medium", "high"]
 
 
 @dataclass
-class RouteDecision:
-    backend: Backend
-    agent_role: AgentRole
-    reasoning_effort: ReasoningEffort
-    verbosity: Verbosity = "medium"
-    codex_sandbox: SandboxMode = "read-only"
-    codex_approval_policy: ApprovalPolicy = "on-failure"
-    gemini_model: Optional[str] = None
-    notes: str = ""
+class PlanSubtask:
+    id: str
+    title: str
+    description: str
+    mode_id: str
+    engine: Engine
+    reasoning_level: ReasoningLevel
+    depends_on: list[str] = field(default_factory=list)
+    acceptance_criteria: list[str] = field(default_factory=list)
+    safety_level: SafetyLevel = "low"
+
+
+@dataclass
+class TaskPlan:
+    task: str
+    summary: str
+    subtasks: list[PlanSubtask]
+    acceptance_criteria: list[str] = field(default_factory=list)
+    notes: list[str] = field(default_factory=list)
 
 
 @dataclass
 class ToolRunResult:
-    backend: Backend
-    agent_role: AgentRole
-    reasoning_effort: ReasoningEffort
-    verbosity: Verbosity
-    output_text: str
-    raw: Any = field(default=None)
+    ok: bool
+    mode_id: str
+    engine: Engine
+    reasoning_level: ReasoningLevel
+    output: dict[str, Any]
+    raw: dict[str, Any] = field(default_factory=dict)
     warnings: list[str] = field(default_factory=list)
-
-
-@dataclass
-class IndexBuildResult:
-    root: str
-    indexed_files: int
-    skipped_files: int
-    bytes_indexed: int
-    db_path: str
-
-
-@dataclass
-class SearchHit:
-    path: str
-    score: float
-    snippet: str
-
-
-@dataclass
-class SearchResults:
-    query: str
-    hits: list[SearchHit]

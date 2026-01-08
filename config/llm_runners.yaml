@@ -1,0 +1,20 @@
+version: 1
+codex:
+  command: codex
+  sandbox: read-only
+  approval_policy: never
+  reasoning_map:
+    fast: low
+    standard: medium
+    deep: high
+  verbosity_map:
+    fast: low
+    standard: medium
+    deep: high
+  use_json: true
+gemini:
+  command: gemini
+  output_format: json
+  approval_mode: yolo
+  allowed_tools: []
+  allowed_mcp_server_names: []

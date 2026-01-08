@@ -1,0 +1,18 @@
+version: 1
+servers:
+  workspace_memory:
+    enabled: true
+    command: python
+    args: ["-m", "workspace_memory.server"]
+    cwd: "${WORKSPACE_ROOT}/services/mcp_workspace_memory"
+    env:
+      PYTHONPATH: "${WORKSPACE_ROOT}/services/mcp_workspace_memory/src"
+      WORKSPACE_MEMORY_CONFIG: "${WORKSPACE_ROOT}/services/mcp_workspace_memory/config.toml"
+    allowed_tools:
+      - "project.list"
+      - "project.set_active"
+      - "docs.search"
+      - "docs.get"
+      - "memory.search"
+      - "memory.remember"
+      - "memory.forget"
