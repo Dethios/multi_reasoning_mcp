@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "multi_reasoning_mcp": {
+      "command": "python",
+      "args": [
+        "-m",
+        "multi_reasoning_mcp.server"
+      ],
+      "env": {
+        "PYTHONPATH": "/home/victor/dev-workspace/projects/multi_reasoning_mcp/src",
+        "MCP_INDEX_DB": "/home/victor/dev-workspace/projects/multi_reasoning_mcp/.mcp_index.sqlite3"
+      }
+    }
+  }
+}
