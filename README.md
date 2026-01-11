@@ -83,6 +83,11 @@ gemini mcp add -t stdio -s project \
   multi_reasoning_mcp python -m multi_reasoning_mcp.server
 ```
 
+Gemini runner config lives in `config/llm_runners.yaml`. You can enable:
+- `extensions`: explicit Gemini extensions list
+- `include_directories`: additional folders for large-context ingestion
+- `allowed_tools` / `allowed_mcp_server_names`: guardrails for tools
+
 ---
 
 ## MCP tools exposed

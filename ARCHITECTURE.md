@@ -47,6 +47,10 @@ If no match, it defaults to `general_coder`.
 ### Gemini CLI
 - Non-interactive output: `--output-format json`
 - Approval: `--approval-mode yolo` (avoids prompt hang)
+- Optional config:
+  - `extensions` for explicit tool availability
+  - `include_directories` for large-context ingestion
+  - `allowed_tools` / `allowed_mcp_server_names` for guardrails
 
 ## Safety Gates
 

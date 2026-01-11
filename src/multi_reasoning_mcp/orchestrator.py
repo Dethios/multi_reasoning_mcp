@@ -78,11 +78,13 @@ class Orchestrator:
             "model_verbosity": verbosity,
         }
 
-    def _gemini_policy(self) -> tuple[list[str], list[str]]:
+    def _gemini_policy(self) -> tuple[list[str], list[str], list[str], list[str]]:
         gemini_cfg = self.runner_config.get("gemini", {})
         allowed_tools = list(gemini_cfg.get("allowed_tools") or [])
         allowed_servers = list(gemini_cfg.get("allowed_mcp_server_names") or [])
-        return allowed_tools, allowed_servers
+        extensions = list(gemini_cfg.get("extensions") or [])
+        include_directories = list(gemini_cfg.get("include_directories") or [])
+        return allowed_tools, allowed_servers, extensions, include_directories
 
     def _run_dir(self, task: str) -> Path:
         base = ensure_dir(Path(self.root) / ".orchestrator" / "runs")
@@ -184,13 +186,15 @@ class Orchestrator:
 
         prompt = self._render_prompt(subtask.mode_id, subtask.description or subtask.title, context, constraints)
         if subtask.engine == "gemini_cli":
-            allowed_tools, allowed_servers = self._gemini_policy()
+            allowed_tools, allowed_servers, extensions, include_directories = self._gemini_policy()
             result = self.gemini.run(
                 prompt=prompt,
                 cwd=self.root,
                 model=mode.model,
                 allowed_tools=allowed_tools,
                 allowed_mcp_server_names=allowed_servers,
+                extensions=extensions,
+                include_directories=include_directories,
             )
         else:
             result = self.codex.run(

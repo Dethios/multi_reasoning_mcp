@@ -18,3 +18,5 @@ gemini:
   approval_mode: yolo
   allowed_tools: []
   allowed_mcp_server_names: []
+  extensions: []
+  include_directories: []

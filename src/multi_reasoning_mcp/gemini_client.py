@@ -22,6 +22,8 @@ class GeminiCliRunner:
         timeout_sec: int = 1800,
         allowed_tools: list[str] | None = None,
         allowed_mcp_server_names: list[str] | None = None,
+        extensions: list[str] | None = None,
+        include_directories: list[str] | None = None,
     ) -> dict[str, Any]:
         start = time.time()
         cmd: list[str] = [
@@ -39,6 +41,12 @@ class GeminiCliRunner:
         if allowed_mcp_server_names:
             for name in allowed_mcp_server_names:
                 cmd += ["--allowed-mcp-server-names", name]
+        if extensions:
+            for ext in extensions:
+                cmd += ["--extensions", ext]
+        if include_directories:
+            for directory in include_directories:
+                cmd += ["--include-directories", directory]
         cmd.append(prompt)
 
         proc = subprocess.run(
