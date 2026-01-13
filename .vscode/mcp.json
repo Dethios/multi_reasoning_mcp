@@ -20,7 +20,7 @@
       "cwd": "${workspaceFolder}/../../services/mcp_workspace_memory",
       "env": {
         "PYTHONPATH": "${workspaceFolder}/../../services/mcp_workspace_memory/src",
-        "WORKSPACE_MEMORY_CONFIG": "${workspaceFolder}/../../services/mcp_workspace_memory/config.toml"
+        "WORKSPACE_MEMORY_CONFIG": "${workspaceFolder}/../../services/mcp_workspace_memory/config/workspace_memory.toml"
       }
     }
   }
