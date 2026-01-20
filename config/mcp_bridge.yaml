@@ -1,6 +1,9 @@
 version: 1
+# Bridge routing: repo-scoped context uses workspace_memory. Upstream/personal
+# memory should be accessed via the upstream memory MCP server, not this bridge.
 servers:
   workspace_memory:
+    # Repo-specific memory store (services/mcp_workspace_memory).
     enabled: true
     command: python
     args: ["-m", "workspace_memory.server"]

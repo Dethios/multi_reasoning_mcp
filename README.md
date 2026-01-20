@@ -180,6 +180,10 @@ This orchestrator can bridge to `services/mcp_workspace_memory` if configured. T
 projects/multi_reasoning_mcp/config/mcp_bridge.yaml
 ```
 
+The bridge is for repo-scoped memory only (workspace context). Upstream/personal memory
+should be accessed via the upstream memory MCP server configured in the host
+environment (for example, VS Code settings), not through this bridge.
+
 If the memory server is not installed/configured, bridge calls return a structured error.
 
 To enable the memory server locally:
