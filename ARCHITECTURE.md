@@ -53,12 +53,14 @@ Roo modes are distinct from orchestrator modes, but the router heuristics align 
 ## CLI Runner Behavior
 
 ### Codex CLI
+
 - Non-interactive: `codex --ask-for-approval never exec`
 - Sandbox: `--sandbox read-only`
 - Output: JSONL events + `--output-last-message` for final text
 - Reasoning/verbosity mapped from `config/llm_runners.yaml`
 
 ### Gemini CLI
+
 - Non-interactive output: `--output-format json`
 - Approval: `--approval-mode yolo` (avoids prompt hang)
 - Optional config:
