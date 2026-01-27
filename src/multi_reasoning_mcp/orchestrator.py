@@ -78,9 +78,18 @@ class Orchestrator:
             "model_verbosity": verbosity,
         }
 
-    def _gemini_policy(self) -> tuple[list[str], list[str], list[str], list[str]]:
+    def _intersect_allowlist(self, global_tools: list[str], mode_tools: list[str]) -> list[str]:
+        if not global_tools or not mode_tools:
+            return []
+        mode_set = set(mode_tools)
+        return [tool for tool in global_tools if tool in mode_set]
+
+    def _gemini_policy(self, mode_tools: list[str]) -> tuple[list[str], list[str], list[str], list[str]]:
         gemini_cfg = self.runner_config.get("gemini", {})
-        allowed_tools = list(gemini_cfg.get("allowed_tools") or [])
+        allowed_tools = self._intersect_allowlist(
+            list(gemini_cfg.get("allowed_tools") or []),
+            mode_tools,
+        )
         allowed_servers = list(gemini_cfg.get("allowed_mcp_server_names") or [])
         extensions = list(gemini_cfg.get("extensions") or [])
         include_directories = list(gemini_cfg.get("include_directories") or [])
@@ -183,10 +192,10 @@ class Orchestrator:
                 ),
                 warnings=["confirmation_required"],
             )
-
+        
         prompt = self._render_prompt(subtask.mode_id, subtask.description or subtask.title, context, constraints)
         if subtask.engine == "gemini_cli":
-            allowed_tools, allowed_servers, extensions, include_directories = self._gemini_policy()
+            allowed_tools, allowed_servers, extensions, include_directories = self._gemini_policy(mode.allowed_tools)
             result = self.gemini.run(
                 prompt=prompt,
                 cwd=self.root,

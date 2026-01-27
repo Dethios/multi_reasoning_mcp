@@ -22,7 +22,16 @@ modes:
 
           Output JSON ONLY with:
           {"summary":string,"decisions":[string],"interfaces":[string],"risks":[string],"patch":string,"next_steps":[string]}
-      allowed_tools: ["repo_scan", "list_modes", "memory_search", "memory_context"]
+      allowed_tools:
+        - "repo_scan_tool"
+        - "list_modes"
+        - "memory_search"
+        - "memory_remember"
+        - "context7_resolve_library_id"
+        - "context7_query_docs"
+        - "memory_read_graph"
+        - "memory_search_nodes"
+        - "memory_open_nodes"
       sensitive: false
       safety_notes: "Architecture output only; no direct edits without patch."
       output_schema:
@@ -51,7 +60,13 @@ modes:
 
           Output JSON ONLY with:
           {"summary":string,"changes":[string],"patch":string,"tests":[string],"risks":[string]}
-      allowed_tools: ["repo_scan", "apply_patch", "memory_search", "memory_context"]
+      allowed_tools:
+        - "repo_scan_tool"
+        - "apply_patch"
+        - "memory_search"
+        - "memory_remember"
+        - "context7_resolve_library_id"
+        - "context7_query_docs"
       sensitive: false
       safety_notes: "Edits must go through apply_patch safety gate."
       output_schema:
@@ -80,7 +95,9 @@ modes:
 
           Output JSON ONLY with:
           {"summary":string,"diagnosis":[string],"patch":string,"tests":[string],"risks":[string]}
-      allowed_tools: ["repo_scan", "apply_patch"]
+      allowed_tools:
+        - "repo_scan_tool"
+        - "apply_patch"
       sensitive: false
       safety_notes: "Avoid destructive changes; propose minimal fixes."
       output_schema:
@@ -109,7 +126,13 @@ modes:
 
           Output JSON ONLY with:
           {"summary":string,"sources":[{"url":string,"quote":string,"note":string}],"gaps":[string]}
-      allowed_tools: ["repo_scan"]
+      allowed_tools:
+        - "repo_scan_tool"
+        - "context7_resolve_library_id"
+        - "context7_query_docs"
+        - "playwright_navigate"
+        - "playwright_screenshot"
+        - "playwright_click"
       sensitive: false
       safety_notes: "Do not fabricate sources or quotes."
       output_schema:
@@ -137,7 +160,8 @@ modes:
 
           Output JSON ONLY with:
           {"summary":string,"packet_markdown":string,"notes":[string]}
-      allowed_tools: ["repo_scan"]
+      allowed_tools:
+        - "repo_scan_tool"
       sensitive: false
       safety_notes: "Output must be directly pasteable."
       output_schema:
@@ -165,7 +189,9 @@ modes:
 
           Output JSON ONLY with:
           {"summary":string,"edits":[string],"patch":string,"style_notes":[string]}
-      allowed_tools: ["repo_scan", "apply_patch"]
+      allowed_tools:
+        - "repo_scan_tool"
+        - "apply_patch"
       sensitive: false
       safety_notes: "Prefer small, reversible edits."
       output_schema:
@@ -221,7 +247,9 @@ modes:
 
           Output JSON ONLY with:
           {"summary":string,"latex":string,"patch":string,"notes":[string]}
-      allowed_tools: ["repo_scan", "apply_patch"]
+      allowed_tools:
+        - "repo_scan_tool"
+        - "apply_patch"
       sensitive: false
       safety_notes: "Avoid large rewrites unless requested."
       output_schema:

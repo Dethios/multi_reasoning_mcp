@@ -6,7 +6,7 @@ The orchestrator is a CLI-only MCP server that plans tasks, routes subtasks to m
 
 ## Components
 
-- `server.py`: MCP entrypoint exposing tools (diagnostics, list_modes, repo_scan, orchestrate_task, run_subtask, apply_patch, bridge health, memory bridge).
+- `server.py`: MCP entrypoint exposing tools (diagnostics, list_modes, repo_scan_tool, orchestrate_task, run_subtask, apply_patch, bridge health, workspace memory bridge, context7/playwright/memory bridges).
 - `modes/modes.yaml`: Mode registry with prompt templates, safety flags, output schemas, and preferred engines.
 - `codex_client.py`: Codex CLI runner (`codex exec`) with non-interactive configuration.
 - `gemini_client.py`: Gemini CLI runner (`gemini --output-format json`) with non-interactive approval mode.
@@ -36,6 +36,20 @@ The router uses keyword-based heuristics to map tasks to modes:
 
 If no match, it defaults to `general_coder`.
 
+## Roo and Orchestrator Mode Mapping
+
+Roo modes are distinct from orchestrator modes, but the router heuristics align them in practice:
+
+| Roo mode | Orchestrator mode |
+| --- | --- |
+| Architect | `architect` |
+| Code / Executor | `general_coder` |
+| Debug | `debugger` |
+| Ask (research) | `deep_researcher_stage1` |
+| Ask (editing/docs) | `editor` |
+| Planner / Orchestrator | `architect` (plan-only) |
+| Verifier | `editor` or `debugger` |
+
 ## CLI Runner Behavior
 
 ### Codex CLI
@@ -52,18 +66,30 @@ If no match, it defaults to `general_coder`.
   - `include_directories` for large-context ingestion
   - `allowed_tools` / `allowed_mcp_server_names` for guardrails
 
+## Tool Naming
+
+- `repo_scan_tool` is the canonical repo scan tool name.
+- Bridge wrapper tools are prefixed with the server name (`context7_*`, `playwright_*`, `memory_*`).
+
+## Allowlist Policy
+
+Tool access is gated by a global allowlist in `config/llm_runners.yaml` and per-mode allowlists in
+`modes/modes.yaml`. The effective toolset is the intersection of both lists; if either list is empty,
+no tools are available.
+
 ## Safety Gates
 
 - `apply_patch` checks for deletes, renames, bulk changes, and large diffs.
 - Risky patches require a confirmation token derived from the patch content.
 - Sensitive modes (`financial_planner`, `therapist`) require an explicit confirmation token before execution.
 
-## Memory MCP Integration
+## Bridge MCP Integration
 
 Two modes of integration are supported:
 
 1) **Peer MCP server**: listed in `.vscode/mcp.json` for direct tool access.
-2) **Bridge**: this orchestrator starts a memory MCP client via `config/mcp_bridge.yaml` and exposes `memory_search`/`memory_remember` tools.
+2) **Bridge**: this orchestrator starts MCP clients via `config/mcp_bridge.yaml` and exposes wrapper tools for
+   `workspace_memory`, `context7`, `playwright`, and `memory`.
 
 The bridge is optional and fails safely if the memory server is not installed.
 

@@ -10,7 +10,7 @@ servers:
     cwd: "${WORKSPACE_ROOT}/services/mcp_workspace_memory"
     env:
       PYTHONPATH: "${WORKSPACE_ROOT}/services/mcp_workspace_memory/src"
-      WORKSPACE_MEMORY_CONFIG: "${WORKSPACE_ROOT}/services/mcp_workspace_memory/config.toml"
+      WORKSPACE_MEMORY_CONFIG: "${WORKSPACE_ROOT}/services/mcp_workspace_memory/config/workspace_memory.toml"
     allowed_tools:
       - "project.list"
       - "project.set_active"
@@ -19,3 +19,32 @@ servers:
       - "memory.search"
       - "memory.remember"
       - "memory.forget"
+  context7:
+    enabled: true
+    command: npx
+    args: ["-y", "@upstash/context7-mcp"]
+    allowed_tools:
+      - "resolve-library-id"
+      - "query-docs"
+  playwright:
+    enabled: true
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-playwright"]
+    allowed_tools:
+      - "playwright_navigate"
+      - "playwright_screenshot"
+      - "playwright_click"
+  memory:
+    enabled: true
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-memory"]
+    allowed_tools:
+      - "create_entities"
+      - "create_relations"
+      - "add_observations"
+      - "delete_entities"
+      - "delete_observations"
+      - "delete_relations"
+      - "read_graph"
+      - "search_nodes"
+      - "open_nodes"

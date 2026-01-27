@@ -263,6 +263,180 @@ async def memory_remember(item: dict[str, Any], project_id: str | None = None) -
         return json_response("Memory store failed.", ok=False, error=str(e))
 
 
+@mcp.tool(title="Context7 resolve library id", description="Bridge to context7 resolve-library-id.")
+async def context7_resolve_library_id(query: str, library_name: str) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("context7", "resolve-library-id", {
+            "query": query,
+            "libraryName": library_name,
+        })
+        return json_response("Context7 library id resolved.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Context7 resolve failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Context7 query docs", description="Bridge to context7 query-docs.")
+async def context7_query_docs(library_id: str, query: str) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("context7", "query-docs", {
+            "libraryId": library_id,
+            "query": query,
+        })
+        return json_response("Context7 docs query complete.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Context7 query failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Playwright navigate", description="Bridge to playwright_navigate.")
+async def playwright_navigate(params: dict[str, Any]) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("playwright", "playwright_navigate", params)
+        return json_response("Playwright navigate complete.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Playwright navigate failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Playwright screenshot", description="Bridge to playwright_screenshot.")
+async def playwright_screenshot(params: dict[str, Any]) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("playwright", "playwright_screenshot", params)
+        return json_response("Playwright screenshot complete.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Playwright screenshot failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Playwright click", description="Bridge to playwright_click.")
+async def playwright_click(params: dict[str, Any]) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("playwright", "playwright_click", params)
+        return json_response("Playwright click complete.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Playwright click failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Memory create entities", description="Bridge to memory create_entities.")
+async def memory_create_entities(entities: list[dict[str, Any]]) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("memory", "create_entities", {"entities": entities})
+        return json_response("Memory entities created.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Memory create entities failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Memory create relations", description="Bridge to memory create_relations.")
+async def memory_create_relations(relations: list[dict[str, Any]]) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("memory", "create_relations", {"relations": relations})
+        return json_response("Memory relations created.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Memory create relations failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Memory add observations", description="Bridge to memory add_observations.")
+async def memory_add_observations(observations: list[dict[str, Any]]) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("memory", "add_observations", {"observations": observations})
+        return json_response("Memory observations added.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Memory add observations failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Memory delete entities", description="Bridge to memory delete_entities.")
+async def memory_delete_entities(entity_names: list[str]) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("memory", "delete_entities", {"entityNames": entity_names})
+        return json_response("Memory entities deleted.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Memory delete entities failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Memory delete observations", description="Bridge to memory delete_observations.")
+async def memory_delete_observations(deletions: list[dict[str, Any]]) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("memory", "delete_observations", {"deletions": deletions})
+        return json_response("Memory observations deleted.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Memory delete observations failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Memory delete relations", description="Bridge to memory delete_relations.")
+async def memory_delete_relations(relations: list[dict[str, Any]]) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("memory", "delete_relations", {"relations": relations})
+        return json_response("Memory relations deleted.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Memory delete relations failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Memory read graph", description="Bridge to memory read_graph.")
+async def memory_read_graph() -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("memory", "read_graph", {})
+        return json_response("Memory graph read.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Memory read graph failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Memory search nodes", description="Bridge to memory search_nodes.")
+async def memory_search_nodes(query: str) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("memory", "search_nodes", {"query": query})
+        return json_response("Memory search complete.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Memory search failed.", ok=False, error=str(e))
+
+
+@mcp.tool(title="Memory open nodes", description="Bridge to memory open_nodes.")
+async def memory_open_nodes(names: list[str]) -> dict[str, Any]:
+    bridge: BridgeManager | None = _ctx().get("bridge")
+    if not bridge:
+        return json_response("Bridge not configured.", ok=False)
+    try:
+        result = await bridge.call("memory", "open_nodes", {"names": names})
+        return json_response("Memory nodes opened.", result=result_to_dict(result))
+    except Exception as e:
+        return json_response("Memory open nodes failed.", ok=False, error=str(e))
+
+
 @mcp.tool(title="Bridge health", description="Check workspace_memory bridge connectivity.")
 async def bridge_health() -> dict[str, Any]:
     bridge: BridgeManager | None = _ctx().get("bridge")
