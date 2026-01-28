@@ -48,3 +48,12 @@ servers:
       - "read_graph"
       - "search_nodes"
       - "open_nodes"
+  qdrant:
+    enabled: true
+    command: npx
+    args: ["mcp-qdrant-server"]
+    env:
+      - QDRANT_URL: http://localhost:6333
+    allowed_tools:
+      - "qdrant-store"
+      - "qdrant-find"

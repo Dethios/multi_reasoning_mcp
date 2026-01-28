@@ -1,17 +1,43 @@
 version: 1
 codex:
   command: codex
-  sandbox: read-only
-  approval_policy: never
+  approval_policy: yolo
   reasoning_map:
-    fast: low
-    standard: medium
+    fast: medium
+    standard: high
     deep: high
   verbosity_map:
     fast: low
     standard: medium
-    deep: high
+    deep: extra high
   use_json: true
+  allowed_tools:
+    - "repo_scan_tool"
+    - "list_modes"
+    - "apply_patch"
+    - "memory_search"
+    - "memory_remember"
+    - "context7_resolve_library_id"
+    - "context7_query_docs"
+    - "playwright_navigate"
+    - "playwright_screenshot"
+    - "playwright_click"
+    - "memory_create_entities"
+    - "memory_create_relations"
+    - "memory_add_observations"
+    - "memory_delete_entities"
+    - "memory_delete_observations"
+    - "memory_delete_relations"
+    - "memory_read_graph"
+    - "memory_search_nodes"
+    - "memory_open_nodes"
+    - "bridge_health"
+  allowed_mcp_server_names:
+    - "context7"
+    - "playwright"
+    - "memory"
+    - "workspace_memory"
+    - "qdrant"
 gemini:
   command: gemini
   output_format: json
@@ -41,5 +67,8 @@ gemini:
     - "context7"
     - "playwright"
     - "memory"
+    - "workspace_memory"
+    - "qdrant"
+extensions:
   extensions: []
   include_directories: []
